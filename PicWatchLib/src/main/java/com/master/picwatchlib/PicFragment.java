@@ -31,10 +31,11 @@ public class PicFragment extends Fragment {
     private MyPhotoView.CloseListener listener;
 
     public static void Go(FragmentActivity activity, ArrayList<String> urls, int index, @NonNull View shared) {
+        shared.setTransitionName("pic");
         activity.getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, new PicFragment().setIndex(index)
                         .setUrls(urls))
-                .addSharedElement(shared, "picxx")
+                .addSharedElement(shared, "pic")
                 .addToBackStack(null)
                 .commit();
 
