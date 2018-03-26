@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.transition.ChangeBounds;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +35,12 @@ public class PicFragment extends Fragment {
 
     public static void Go(FragmentActivity activity, ArrayList<String> urls, int index, @NonNull View shared,int backcolor) {
         shared.setTransitionName("pic");
+        PicFragment fragment = new PicFragment().setIndex(index)
+                .setUrls(urls).setBackgroundColor(backcolor);
+        fragment.setEnterTransition(new ChangeBounds());
+        fragment.setExitTransition(new ChangeBounds());
         activity.getSupportFragmentManager().beginTransaction()
-                .add(android.R.id.content, new PicFragment().setIndex(index)
-                        .setUrls(urls).setBackgroundColor(backcolor))
+                .add(android.R.id.content, fragment)
                 .addSharedElement(shared, "pic")
                 .addToBackStack(null)
                 .commit();
@@ -102,7 +107,7 @@ public class PicFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewpager);
         indexview = view.findViewById(R.id.index);
         indexview.setText(String.format("%s/%s", index + 1, urls.size()));
-        viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public android.support.v4.app.Fragment getItem(int position) {
                 EachPicFragment eachPicFragment = new EachPicFragment().setUrl(urls.get(position));
