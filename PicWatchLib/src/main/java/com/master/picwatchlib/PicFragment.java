@@ -1,6 +1,9 @@
 package com.master.picwatchlib;
 
 
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +12,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.transition.ChangeBounds;
+import android.transition.ChangeImageTransform;
+import android.transition.ChangeTransform;
 import android.transition.Fade;
+import android.transition.TransitionSet;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +40,14 @@ public class PicFragment extends Fragment {
 
     private MyPhotoView.CloseListener listener;
 
-    public static void Go(FragmentActivity activity, ArrayList<String> urls, int index, @NonNull View shared,int backcolor) {
+    public static void Go(FragmentActivity activity, ArrayList<String> urls, int index, @NonNull View shared, int backcolor) {
         shared.setTransitionName("pic");
         PicFragment fragment = new PicFragment().setIndex(index)
                 .setUrls(urls).setBackgroundColor(backcolor);
-        fragment.setEnterTransition(new ChangeBounds());
-        fragment.setExitTransition(new ChangeBounds());
+        fragment.setEnterTransition(new Fade());
+        fragment.setExitTransition(new Fade());
+        fragment.setSharedElementEnterTransition(new DetailTransition());
+        fragment.setSharedElementReturnTransition(new DetailTransition());
         activity.getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, fragment)
                 .addSharedElement(shared, "pic")
@@ -47,10 +56,32 @@ public class PicFragment extends Fragment {
 
     }
 
-    public PicFragment setBackgroundColor(int color){
-        this.color=color;
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static class DetailTransition extends TransitionSet {
+        public DetailTransition() {
+            init();
+        }
+
+        // 允许资源文件使用
+        public DetailTransition(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            init();
+        }
+
+        private void init() {
+            setOrdering(ORDERING_TOGETHER);
+            addTransition(new ChangeBounds())
+                    .addTransition(new ChangeTransform()).
+                    addTransition(new ChangeImageTransform());
+        }
+    }
+
+
+    public PicFragment setBackgroundColor(int color) {
+        this.color = color;
         return this;
     }
+
     public PicFragment setChildCloseListener(MyPhotoView.CloseListener listener) {
         this.listener = listener;
         return this;
@@ -101,7 +132,7 @@ public class PicFragment extends Fragment {
             urls = (ArrayList<String>) savedInstanceState.getSerializable("urls");
         }
         View root = view.findViewById(R.id.root);
-        if(color!=0){
+        if (color != 0) {
             root.setBackgroundColor(color);
         }
         viewPager = view.findViewById(R.id.viewpager);
