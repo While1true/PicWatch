@@ -36,7 +36,6 @@ class MyPhotoView extends PhotoView implements OnScaleChangedListener{
 
     private void initxx() {
         setOnScaleChangeListener(this);
-        setMinimumScale(0.1f);
         paint=new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(0xffffffff);
         paint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,16,getResources().getDisplayMetrics()));
@@ -71,7 +70,7 @@ class MyPhotoView extends PhotoView implements OnScaleChangedListener{
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_POINTER_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
             if (getScale() <= 0.6f) {
-                setScale(0.1f, true);
+                setScale(getMinimumScale(), true);
                 return true;
             } else if (getScale() < 1f) {
                 setScale(1f, true);
@@ -87,6 +86,9 @@ class MyPhotoView extends PhotoView implements OnScaleChangedListener{
     }
 
     public void setCloseListener(CloseListener closeListener) {
+        if(closeListener!=null){
+            setMinimumScale(0.1f);
+        }
         this.closeListener = closeListener;
     }
 

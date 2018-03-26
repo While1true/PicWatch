@@ -27,20 +27,25 @@ public class PicFragment extends Fragment {
     private int index = 0;
     private TextView indexview;
     private ViewPager viewPager;
+    private int color;
 
     private MyPhotoView.CloseListener listener;
 
-    public static void Go(FragmentActivity activity, ArrayList<String> urls, int index, @NonNull View shared) {
+    public static void Go(FragmentActivity activity, ArrayList<String> urls, int index, @NonNull View shared,int backcolor) {
         shared.setTransitionName("pic");
         activity.getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, new PicFragment().setIndex(index)
-                        .setUrls(urls))
+                        .setUrls(urls).setBackgroundColor(backcolor))
                 .addSharedElement(shared, "pic")
                 .addToBackStack(null)
                 .commit();
 
     }
 
+    public PicFragment setBackgroundColor(int color){
+        this.color=color;
+        return this;
+    }
     public PicFragment setChildCloseListener(MyPhotoView.CloseListener listener) {
         this.listener = listener;
         return this;
@@ -89,6 +94,10 @@ public class PicFragment extends Fragment {
         if (savedInstanceState != null) {
             index = savedInstanceState.getInt("index");
             urls = (ArrayList<String>) savedInstanceState.getSerializable("urls");
+        }
+        View root = view.findViewById(R.id.root);
+        if(color!=0){
+            root.setBackgroundColor(color);
         }
         viewPager = view.findViewById(R.id.viewpager);
         indexview = view.findViewById(R.id.index);
