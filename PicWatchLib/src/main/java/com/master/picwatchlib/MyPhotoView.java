@@ -71,11 +71,9 @@ class MyPhotoView extends PhotoView implements OnScaleChangedListener{
         if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_POINTER_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
             if (getScale() <= 0.6f) {
                 setScale(getMinimumScale(), true);
-                super.dispatchTouchEvent(event);
                 return true;
             } else if (getScale() < 1f) {
                 setScale(1f, true);
-                super.dispatchTouchEvent(event);
                 return true;
             }
 
