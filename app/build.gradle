@@ -4,8 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.master.picwatch"
         minSdkVersion 21
@@ -23,7 +25,14 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation project(':PicWatchLib')
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'com.android.support:appcompat-v7:27.1.0'
+    compile project(':PicWatchLib')
+}
+apply plugin: 'com.didi.virtualapk.plugin'
+
+virtualApk {
+    packageId = 0x6f // the package id of Resources.
+    targetHost = 'D:/Github/WeiboMaster/app' // the path of application module in host project.
+    applyHostMapping = true //optional, default value: true.
 }

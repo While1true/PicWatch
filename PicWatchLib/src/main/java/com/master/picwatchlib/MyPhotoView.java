@@ -12,7 +12,7 @@ import com.github.chrisbanes.photoview.PhotoView;
 
 import java.io.Serializable;
 
-class MyPhotoView extends PhotoView implements OnScaleChangedListener{
+public class MyPhotoView extends PhotoView implements OnScaleChangedListener{
 
     private Paint paint=null;
     private boolean finish=false;

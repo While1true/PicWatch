@@ -15,6 +15,6 @@ class MainActivity : AppCompatActivity() {
         }
         val view:View=findViewById(android.R.id.content)
         view.transitionName="pic"
-        PicFragment.Go(this,urls,2,view)
+        PicFragment.Go(this,urls,2,view,0)
     }
 }
