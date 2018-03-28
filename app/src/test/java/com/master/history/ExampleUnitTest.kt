@@ -1,4 +1,4 @@
-package com.master.picwatch
+package com.master.history
 
 import org.junit.Test
 
