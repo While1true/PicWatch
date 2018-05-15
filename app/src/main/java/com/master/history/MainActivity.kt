@@ -20,7 +20,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
-    val http = "http://10.0.110.134:8090/masterWeiBo/getHistory100?"
+    val http = "http://47.106.176.142/masterWeiBo/getHistory100?"
     var recyclerview: RecyclerView? = null
     var progressx: ProgressBar? = null
     override fun onCreate(savedInstanceState: Bundle?) {

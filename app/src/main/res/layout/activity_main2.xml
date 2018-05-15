@@ -27,7 +27,7 @@
         <FrameLayout
             android:background="@color/colorPrimaryDark"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize">
+            android:layout_height="?android:actionBarSize">
             <ImageView
                 android:id="@+id/ic_back"
                 android:src="@drawable/ic_back"

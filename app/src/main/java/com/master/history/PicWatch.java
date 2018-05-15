@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class PicWatch extends AppCompatActivity {
-    String http = "http://10.0.110.134:8090/masterWeiBo/getMycloud100?";
+    String http = "http://47.106.176.142/masterWeiBo/getMycloud100?";
     private View progress;
     private WebView webview;
 
@@ -51,14 +51,18 @@ public class PicWatch extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        progress.setVisibility(View.GONE);
-                        String style="<style type=\"text/css\">#ff{border:1px solid #666666;margin:3px;}#xx{display: grid;grid-template-columns: 33% 33% 33%;grid-template-rows: auto auto auto;}img{width:100%;height:auto;}</style>";
-                        String url="";
-                        for (Data2 data2 : bean.getData()) {
-                            url+=String.format(" <div id=\"ff\"><p>日期：%s</p><img src=\"%s\"></img></div>",data2.getDate(),data2.getUrl());
+                        try {
+                            progress.setVisibility(View.GONE);
+                            String style="<style type=\"text/css\">#ff{border:1px solid #666666;margin:3px;}#xx{display: grid;grid-template-columns: 33% 33% 33%;grid-template-rows: auto auto auto;}img{width:100%;height:auto;}</style>";
+                            String url="";
+                            for (Data2 data2 : bean.getData()) {
+                                url+=String.format(" <div id=\"ff\"><p>日期：%s</p><img src=\"%s\"></img></div>",data2.getDate(),data2.getUrl());
+                            }
+                            url="<div id=\"xx\">"+url+"</div>";
+                            webview.loadData(style+url,"text/html","utf-8");
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        url="<div id=\"xx\">"+url+"</div>";
-                        webview.loadData(style+url,"text/html","utf-8");
                     }
                 });
             }

@@ -43,11 +43,14 @@ public class PicFragment extends Fragment {
     private MyPhotoView.CloseListener listener;
 
     public static void Go(FragmentActivity activity, ArrayList<String> urls, int index, @NonNull View shared, int backcolor) {
-        shared.setTransitionName("pic");
+
         PicFragment fragment = new PicFragment().setIndex(index)
                 .setUrls(urls).setBackgroundColor(backcolor);
-        fragment.setEnterTransition(new Fade());
-        fragment.setExitTransition(new Fade());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            shared.setTransitionName("pic");
+            fragment.setEnterTransition(new Fade());
+            fragment.setExitTransition(new Fade());
+        }
         fragment.setSharedElementEnterTransition(new DetailTransition());
         fragment.setSharedElementReturnTransition(new DetailTransition());
         activity.getSupportFragmentManager().beginTransaction()
